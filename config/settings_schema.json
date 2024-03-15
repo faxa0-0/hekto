@@ -81,6 +81,54 @@
             "id": "shadow",
             "label": "t:settings_schema.colors.settings.shadow.label",
             "default": "#121212"
+          },
+          {
+            "type": "color",
+            "id": "secondary_background",
+            "label": "Secondary background",
+            "default": "#7E33E0"
+          },
+          {
+            "type": "color",
+            "id": "light_text",
+            "label": "Light text",
+            "default": "#F1F1F1"
+          },
+          {
+            "type": "color",
+            "id": "primary_text",
+            "label": "Primary text",
+            "default": "#0D0E43"
+          },
+          {
+            "type": "color",
+            "id": "primary_subtext",
+            "label": "Primary subtext",
+            "default": "#8A8FB9"
+          },
+          {
+            "type": "color",
+            "id": "primary_accent",
+            "label": "Primary accent",
+            "default": "#FB2E86"
+          },
+          {
+            "type": "color",
+            "id": "secondary_heading",
+            "label": "Secondary heading",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "id": "tertiary_background",
+            "label": "Tertiary background",
+            "default": "#EEEFFB"
+          },
+          {
+            "type": "color",
+            "id": "dark_tertiary_background",
+            "label": "Dark Tertiary background",
+            "default": "#E7E4F8"
           }
         ],
         "role": {
