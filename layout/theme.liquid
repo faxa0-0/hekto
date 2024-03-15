@@ -12,6 +12,8 @@
     {%- endif -%}
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">    
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
@@ -42,6 +44,10 @@
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
       assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
     %}
+    <style>
+      .primary-font-family{font-family:"Josefin Sans", sans-serif;}
+      .secondary-font-family{font-family:"Lato", sans-serif;}
+    </style>
 
     {% style %}
       {{ settings.type_body_font | font_face: font_display: 'swap' }}
@@ -87,6 +93,14 @@
         --color-badge-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
         --color-badge-border: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
         --payment-terms-background-color: rgb({{ scheme.settings.background.rgb }});
+        --color-secondary-background: {{ scheme.settings.secondary_background }};
+        --color-tertiary-background: {{ scheme.settings.tertiary_background }};
+        --color-dark-tertiary-background: {{ scheme.settings.dark_tertiary_background }};
+        --color-light-text: {{ scheme.settings.light_text }};
+        --color-primary-text: {{ scheme.settings.primary_text }};
+        --color-primary-subtext: {{ scheme.settings.primary_subtext }};
+        --color-primary-accent: {{ scheme.settings.primary_accent}};
+        --color-secondary_heading: {{ scheme.settings.secondary_heading}};
       }
       {% endfor %}
 
@@ -238,7 +252,7 @@
         margin: 0;
         font-size: 1.5rem;
         letter-spacing: 0.06rem;
-        line-height: calc(1 + 0.8 / var(--font-body-scale));
+        //line-height: calc(1 + 0.8 / var(--font-body-scale));
         font-family: var(--font-body-family);
         font-style: var(--font-body-style);
         font-weight: var(--font-body-weight);
