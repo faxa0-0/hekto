@@ -1,0 +1,126 @@
+{{ 'foot-bar.min.css' | asset_url | stylesheet_tag }}
+{{ 'foot-bar.min.js' | asset_url | script_tag }}
+
+<footer class='foot-bar'>
+  <div class='foot-bar__container  page-width'>
+    <div class='foot-bar__menu'>
+      <div class='foot-bar__menu__contacts'>
+        <a href='/' class='foot-bar__menu__contacts--logo'>
+          {% if section.settings.logo %}
+            <img class='foot-bar__menu__contacts--logo--image' src='{{ section.settings.logo}}'>
+          {% elsif section.settings.logo_text %}
+            <span class='foot-bar__menu__contacts--logo--text primary-font-family'>
+              {{- section.settings.logo_text | capitalize -}}
+            </span>
+          {% endif %}
+        </a>
+
+        <div class='foot-bar__menu__contacts--sign-up'>
+          <form action='#' class='sign-up--form'>
+            <input type='text' class='sign-up--input secondary-font-family' placeholder='Enter Email Address'>
+            <button class='sign-up--button secondary-font-family'>Sign up</button>
+          </form>
+        </div>
+
+        <div class='foot-bar__menu__contacts--info secondary-font-family'>
+          <p>Contact Info</p>
+          <p>{{ section.settings.address }}</p>
+        </div>
+      </div>
+
+      <div class='foot-bar__menu__category-list'>
+        <h4 class='title'>Category</h4>
+        <ul class='link-list'>
+          {% for link in section.settings.catagories_menu.links %}
+            <li>
+              <a class='link' href='{{link.url}}'>{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class='foot-bar__menu__customer-care'>
+        <h4 class='title'>Customer Care</h4>
+        <ul class='link-list'>
+          {% for link in section.settings.customer_care_menu.links %}
+            <li>
+              <a class='link' href='{{link.url}}'>{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class='foot-bar__menu__pages'>
+        <h4 class='title'>Pages</h4>
+        <ul class='link-list'>
+          {% for link in section.settings.pages_menu.links %}
+            <li>
+              <a class='link' href='{{link.url}}'>{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class='foot-bar__policy secondary-font-family'>
+    <p class='foot-bar__policy__terms'>©Webecy - All Rights Reserved</p>
+    <div class='foot-bar__policy__socials'>
+      <a href='{{section.settings.facebook_link}}'>{% render 'icon-set', icon: 'facebook' %}</a>
+      <a href='{{section.settings.instagram_link}}'>{% render 'icon-set', icon: 'instagram' %}</a>
+      <a href='{{section.settings.twitter_link}}'>{% render 'icon-set', icon: 'twitter' %}</a>
+    </div>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Footer",
+  "class": "foot-bar-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "hekto"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Address",
+      "default": "17 Princess Road, London, Greater London NW1 8JR, UK"
+    },
+    {
+      "type": "link_list",
+      "id": "catagories_menu",
+      "label": "Categories Link lists"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_care_menu",
+      "label": "Customer Care Link lists"
+    },
+    {
+      "type": "link_list",
+      "id": "pages_menu",
+      "label": "Pages Link lists"
+    },
+    {
+      "type": "url",
+      "id": "facebook_link",
+      "label": "Facebook Link"
+    },
+    {
+      "type": "url",
+      "id": "instagram_link",
+      "label": "Instagram Link"
+    },
+    {
+      "type": "url",
+      "id": "twitter_link",
+      "label": "Twitter Link"
+    }
+  ]
+}
+{% endschema %}
