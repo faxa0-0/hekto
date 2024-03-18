@@ -6,8 +6,13 @@
     {% for block in section.blocks %}
       <div class='swiper-slide'>
         <div class='swiper-slide__image-container'>
-          <img class='swiper-slide__desktop-image' src='{{ block.settings.desktop_image |  image_url  }}' alt='Image'>
-          <img class='swiper-slide__mobile-image' src='{{ block.settings.mobile_image |  image_url  }}' alt='Image'>
+          <picture>
+            <source
+              srcset='{{ block.settings['mobile_image'] | image_url }}'
+              media='(max-width: 599.99px)'
+            >
+            <img class='swiper-slide__desktop-image' src='{{ block.settings.desktop_image |  image_url  }}' alt='Image'>
+          </picture>
         </div>
         <div class='slide-content__container'>
           <div class='slide-content'>
@@ -128,12 +133,6 @@
     }
   }
   @media screen and (max-width: 599.99px) {
-    .swiper-slide__mobile-image {
-      display: block;
-    }
-    .swiper-slide__desktop-image {
-      display: none;
-    }
     .slide-content {
       text-align: center;
       margin-right: 0;
