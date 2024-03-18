@@ -99,14 +99,14 @@
       }
     }
     @media screen and (max-width: 942.99px) {
-      justify-content: space-around;
-      text-align: center;
+      justify-content: flex-start;
     }
   }
   &__policy {
     display: flex;
     justify-content: space-around;
     padding-block: 17px;
+    font-size: clamp(12px, 2vw, 16px);
     background-color: var(--color-dark-tertiary-background);
     color: #9da0ae;
     font-weight: 600;
@@ -116,6 +116,11 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }
