@@ -1,7 +1,7 @@
 {{ 'https://unpkg.com/swiper/swiper-bundle.min.css' | stylesheet_tag }}
-{{ 'https://unpkg.com/swiper/swiper-bundle.min.js' | script_tag }}
+<script src='{{ 'hero-slider.min.js' | asset_url }}' defer></script>
 
-<div class='swiper'>
+<div class='swiper' id='{{ section.id }}' data-component='hero-slider'>
   <div class='swiper-wrapper'>
     {% for block in section.blocks %}
       <div class='swiper-slide'>
@@ -27,17 +27,8 @@
       </div>
     {% endfor %}
   </div>
-  <div class='swiper-pagination'></div>
+  <div class='swiper-pagination swiper-pagination--{{ section.id }}' data-component='hero-slider-pagination'></div>
 </div>
-
-<script>
-  const swiper = new Swiper('.swiper', {
-    loop: true,
-    pagination: {
-      el: '.swiper-pagination',
-    },
-  });
-</script>
 
 <style>
   .swiper {
