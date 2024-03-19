@@ -1,0 +1,37 @@
+<a href='{{ product.url }}' class='plp-item'>
+  <div class='plp-item__image-wrapper'>
+    <img
+      class='plp-item__image'
+      src='{{ product.featured_image |  image_url  }}'
+      alt='{{ product.title }}'
+    >
+    <div class='plp-item__actions'>
+      <span class='action'>{% render 'icon-set', icon: 'cart' %}</span>
+      <span class='action'>{% render 'icon-set', icon: 'heart' %}</span>
+      <span class='action'>{% render 'icon-set', icon: 'search-plus' %}</span>
+    </div>
+  </div>
+  <div class='plp-item__info-wrapper'>
+    <h5 class='plp-item--title'>
+      {{ product.title }}
+    </h5>
+    <div class='plp-item--variants'>
+      {% for variant in product.variants %}
+        <span
+          class='plp-item--variant'
+          style='background-color: {{ variant.title | downcase }}; color: {{ variant.title | downcase }};'
+        ></span>
+      {% endfor %}
+    </div>
+    <div class='plp-item--price primary-font-family'>
+      <p class='plp-item--price-discounted'>
+        {{ product.price | money }}
+      </p>
+      {% if product.compare_at_price > product.price %}
+        <p class='plp-item--price-actual'>
+          {{ product.compare_at_price | money }}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</a>

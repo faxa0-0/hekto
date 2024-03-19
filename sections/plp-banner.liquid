@@ -1,0 +1,30 @@
+{{ 'plp-banner.min.css' | asset_url | stylesheet_tag }}
+
+<div class='plp-banner'>
+  <div class='plp-banner-container page-width'>
+    <div class='plp-banner__text-wrapper'>
+      <h1 class='plp-banner__title primary-font-family'>
+        {{- section.settings.title -}}
+      </h1>
+      <p class='plp-banner__breadcrumb'>
+        <span class='plp-banner__breadcrumb-item'>Home</span>
+        <span class='plp-banner__breadcrumb-item'>.Pages Shop</span>
+        <span class='plp-banner__breadcrumb-item current'>.Grid Default</span>
+      </p>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "PLP-banner",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Shop Grid Default"
+    }
+  ]
+}
+{% endschema %}

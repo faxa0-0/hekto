@@ -102,9 +102,21 @@
           },
           {
             "type": "color",
+            "id": "secondary_text",
+            "label": "Secondary text",
+            "default": "#151875"
+          },
+          {
+            "type": "color",
             "id": "primary_subtext",
             "label": "Primary subtext",
             "default": "#8A8FB9"
+          },
+          {
+            "type": "color",
+            "id": "secondary_subtext",
+            "label": "Primary subtext",
+            "default": "#3F509E"
           },
           {
             "type": "color",

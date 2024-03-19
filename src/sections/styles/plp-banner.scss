@@ -1,0 +1,26 @@
+.plp-banner-container * {
+  margin: 0;
+  padding: 0;
+}
+
+.plp-banner {
+  background-color: #f6f5ff;
+  padding-block: 96px 126px;
+  &__title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #101750;
+    margin-bottom: 10px;
+  }
+  &__breadcrumb {
+    &-item {
+      font-size: 16px;
+      font-weight: 500;
+      color: #000;
+      cursor: pointer;
+      &.current {
+        color: var(--color-primary-accent);
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{{ 'plp-grid.min.css' | asset_url | stylesheet_tag }}
+{{ 'plp-grid.min.js' | asset_url | script_tag }}
+
+<div class='plp'>
+  <div class='plp-container page-width'>
+    <div class='plp-filters'>
+      <div class='plp-filters--info'>
+        <h5 class='filters__title primary-font-family'>Ecommerce Accesories & Fashion item</h5>
+        <span class='filters__stats  secondary-font-family'>About 9,620 results (0.62 seconds)</span>
+      </div>
+      <div class='plp-filters--actions'>
+        <label for='sort'
+          >Sort by:
+          {% assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+          <select class='plp-filters--actions-sort' name='sort_by' id='sort'>
+            {% for option in collection.sort_options %}
+              <option
+                value='{{ option.value }}'
+                {%- if option.value == sort_by %}
+                  selected='selected'
+                {%- endif %}
+              >
+                {{ option.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </label>
+        <div class='plp-filters--actions-view'>
+          <span>View: </span>
+          <span class='grid-view'>
+            {% render 'icon-set', icon: 'grid-view' %}
+          </span>
+          <span class='list-view'>
+            {% render 'icon-set', icon: 'list-view' %}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class='plp-grid' id='plp-grid'>
+      {% for product in collection.products %}
+        {% render 'plp-grid-card', product: product %}
+      {% endfor %}
+    </div>
+    <div class='plp-sponsors-banner-wrapper'>
+      <img class='plp-sponsors-banner' src='{{ section.settings.sponsors_banner |  image_url }}' alt='Sponsors Banner'>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PLP-grid",
+  "class": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "sponsors_banner",
+      "label": "Sponsors Banner"
+    }
+  ]
+}
+{% endschema %}
