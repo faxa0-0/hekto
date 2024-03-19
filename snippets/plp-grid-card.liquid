@@ -15,14 +15,17 @@
     <h5 class='plp-item--title'>
       {{ product.title }}
     </h5>
-    <div class='plp-item--variants'>
-      {% for variant in product.variants %}
-        <span
-          class='plp-item--variant'
-          style='background-color: {{ variant.title | downcase }}; color: {{ variant.title | downcase }};'
-        ></span>
-      {% endfor %}
-    </div>
+    {% if product.variants.size > 0 %}
+      <div class='plp-item--variants'>
+        {% for variant in product.variants %}
+          <span
+            class='plp-item--variant'
+            style='background-color: {{ variant.title | downcase }}; color: {{ variant.title | downcase }};'
+          ></span>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <div class='plp-item--price primary-font-family'>
       <p class='plp-item--price-discounted'>
         {{ product.price | money }}

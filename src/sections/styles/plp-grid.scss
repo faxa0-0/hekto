@@ -168,17 +168,7 @@
     &--variant {
       width: 10px;
       height: 10px;
-      background-color: red;
       border-radius: 50%;
-      &.orange {
-        background-color: #de9034;
-      }
-      &.pink {
-        background-color: #ec42a2;
-      }
-      &.purple {
-        background-color: #8568ff;
-      }
     }
     &--price {
       display: flex;
