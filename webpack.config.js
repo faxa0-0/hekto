@@ -40,6 +40,10 @@ module.exports = (options, args) => {
           exclude: /node_modules/,
           use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
         },
+        {
+          test: /\.css$/,
+          use: [ "style-loader", "css-loader" ]
+        },
       ],
     },
     watchOptions: { aggregateTimeout: 100 },
