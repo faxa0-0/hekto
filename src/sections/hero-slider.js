@@ -1,6 +1,8 @@
 import { onDocumentReady } from '../utils/dom.js';
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 const state = {
   elements: {},
@@ -12,7 +14,7 @@ const cacheState = () => {
   };
 };
 
-// TODO: Pagination doesn't work with multiple instances of swiper 
+// TODO: Pagination doesn't work with multiple instances of swiper
 
 const initSwipers = () => {
   state.elements.sliders.forEach((slider) => {
