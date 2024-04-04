@@ -6,8 +6,11 @@
       alt='{{ product.title }}'
     >
     <div class='plp-item__actions'>
-      <span class='action' id='addToCart' 
-      data-id='{{ product.first_available_variant.id }}'>
+      <span
+        class='action'
+        id='addToCart'
+        data-id='{{ product.first_available_variant.id }}'
+      >
         {%- render 'icon-set', icon: 'cart' -%}
         <span class='loader'></span>
       </span>
@@ -24,7 +27,7 @@
         {% for variant in product.variants %}
           <span
             class='plp-item--variant'
-            style='background-color: {{ variant.title | downcase }}; color: {{ variant.title | downcase }};'
+            style='background-color: {{ variant.metafields.custom.color }}; color: {{ variant.metafields.custom.color }};'
           ></span>
         {% endfor %}
       </div>
