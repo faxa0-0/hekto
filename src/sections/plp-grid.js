@@ -11,7 +11,7 @@ const cacheState = () => {
     url: new URL(window.location.href),
     collectionGrid: document.getElementById('plp-grid'),
     addToCartItems: document.querySelectorAll('#addToCart'),
-    loaderEl: document.querySelector('.loader'),
+    cart: document.querySelector('.c-cart-drawer'),
   };
 };
 
@@ -44,7 +44,6 @@ const sortFunction = async (e) => {
 };
 
 const addToCart = async (addToCartItem, dataId) => {
-  console.log(state.elements.loaderEl)
   try {
     addToCartItem.classList.add('active');
 
@@ -68,7 +67,12 @@ const addToCart = async (addToCartItem, dataId) => {
   } catch (error) {
     console.error('Error:', error);
   } finally {
-    addToCartItem.classList.add('active');
+    addToCartItem.querySelector('.loader').classList.add('loaded');
+    setTimeout(() => {
+      addToCartItem.querySelector('.loader').classList.remove('loaded');
+      addToCartItem.classList.remove('active');
+    }, 2000);
+    state.elements.cart.classList.add('c-cart-drawer--active');
   }
 };
 
