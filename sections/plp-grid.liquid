@@ -36,16 +36,29 @@
         </div>
       </div>
     </div>
-    <div class='plp-grid' id='plp-grid'>
-      {% for product in collection.products %}
-        {% render 'plp-grid-card', product: product %}
-      {% endfor %}
+    <div class='plp-grid--container'>
+      <div class='plp-grid--filters'>
+        {% render 'plp-grid-filters', results: collection %}
+      </div>
+      {% paginate collection.products by section.settings.page_range %}
+        <div class='plp-grid' id='plp-grid'>
+          {% for product in collection.products %}
+            {% render 'plp-grid-card', product: product %}
+          {% endfor %}
+          {% if collection.products.size > 0 %}
+            <button class='plp-grid--load-more'>Load more</button>
+          {% endif %}
+        </div>
+      {% endpaginate %}
     </div>
-    <div class='plp-sponsors-banner-wrapper'>
+    <div class='plp-sponsors-banner--wrapper'>
       <img class='plp-sponsors-banner' src='{{ section.settings.sponsors_banner |  image_url }}' alt='Sponsors Banner'>
     </div>
   </div>
 </div>
+<script>
+  window.SectionID = { sectionID: '{{ section.id }}' };
+</script>
 
 {% schema %}
 {
@@ -61,6 +74,15 @@
       "type": "image_picker",
       "id": "sponsors_banner",
       "label": "Sponsors Banner"
+    },
+    {
+      "type": "range",
+      "id": "page_range",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "label": "page_range",
+      "default": 4
     }
   ]
 }

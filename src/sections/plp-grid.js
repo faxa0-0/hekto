@@ -12,6 +12,11 @@ const cacheState = () => {
     collectionGrid: document.getElementById('plp-grid'),
     addToCartItems: document.querySelectorAll('#addToCart'),
     cart: document.querySelector('.c-cart-drawer'),
+    filterCheckbox: document.querySelectorAll(
+      ".filter-container input[type='checkbox']",
+    ),
+    loadMoreBtn: document.querySelector('.plp-grid--load-more'),
+    defaultPage: 2,
   };
 };
 
@@ -76,6 +81,50 @@ const addToCart = async (addToCartItem, dataId) => {
   }
 };
 
+const filterFunction = () => {
+  state.elements.filterCheckbox.forEach(function (checkbox) {
+    checkbox.addEventListener('change', async function () {
+      if (this.checked) {
+        const name = this.getAttribute('name');
+        const value = this.getAttribute('value');
+
+        addToParam(name, value);
+
+        fetchData();
+      } else {
+        const name = this.getAttribute('name');
+        const value = this.getAttribute('value');
+
+        state.elements.url.searchParams.delete(name, value);
+        window.history.pushState({}, '', state.elements.url);
+
+        fetchData();
+      }
+    });
+  });
+};
+
+const loadMoreFunction = async () => {
+  try {
+    const response = await fetch(
+      window.location.pathname +
+        `?section=${window.SectionID}&page=${state.elements.defaultPage}`,
+    );
+    const html = await response.text();
+    const collectionsWrapper = new DOMParser().parseFromString(
+      html,
+      'text/html',
+    );
+    const items = collectionsWrapper.querySelectorAll('.plp-item');
+    state.elements.defaultPage += 1;
+    items.forEach((item) => {
+      state.elements.loadMoreBtn.insertAdjacentElement('beforebegin', item);
+    });
+  } catch (error) {
+    console.error('Error loading more:', error);
+  }
+};
+
 const attachEventListeners = () => {
   state.elements.sortBy.addEventListener('change', sortFunction);
 
@@ -86,10 +135,13 @@ const attachEventListeners = () => {
       addToCart(addToCartItem, dataId);
     });
   });
+
+  state.elements.loadMoreBtn.addEventListener('click', loadMoreFunction);
 };
 
 const init = () => {
   cacheState();
+  filterFunction();
   attachEventListeners();
 };
 
