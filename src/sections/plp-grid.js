@@ -15,6 +15,9 @@ const cacheState = () => {
     filterCheckbox: document.querySelectorAll(
       ".filter-container input[type='checkbox']",
     ),
+    filterPrice: document.querySelectorAll(
+      ".filter-group-display__price-range input[type='number']",
+    ),
     loadMoreBtn: document.querySelector('.plp-grid--load-more'),
     defaultPage: 2,
   };
@@ -28,10 +31,33 @@ const resultData = (data) => {
   state.elements.collectionGrid.innerHTML = newInnerHtml;
 };
 
-const addToParam = (name, value) => {
-  state.elements.url.searchParams.set(name, value);
+function updateUrlParams() {
+  const sortBy = state.elements.sortBy;
+  const params = new URLSearchParams();
+
+  if (sortBy.value) {
+    state.elements.defaultPage = 2;
+    params.set(sortBy.name, sortBy.value);
+  }
+
+  state.elements.filterCheckbox.forEach((checkbox) => {
+    if (checkbox.checked) {
+      const name = checkbox.getAttribute('name');
+      const value = checkbox.getAttribute('value');
+      state.elements.defaultPage = 2;
+      params.append(name, value);
+    }
+  });
+
+  state.elements.filterPrice.forEach((price) => {
+    state.elements.defaultPage = 2;
+    const name = price.getAttribute('name');
+    params.set(name, price.value);
+  });
+
+  state.elements.url.search = params.toString();
   window.history.pushState({}, '', state.elements.url);
-};
+}
 
 const fetchData = async () => {
   const res = await fetch(state.elements.url);
@@ -43,7 +69,7 @@ const fetchData = async () => {
 };
 
 const sortFunction = async (e) => {
-  addToParam(e.target.name, e.target.value);
+  updateUrlParams();
 
   fetchData();
 };
@@ -133,6 +159,18 @@ const attachEventListeners = () => {
       e.preventDefault();
       const dataId = addToCartItem.getAttribute('data-id');
       addToCart(addToCartItem, dataId);
+    });
+  });
+  state.elements.filterPrice.forEach((price) => {
+    price.addEventListener('change', async () => {
+      updateUrlParams();
+      fetchData();
+    });
+  });
+  state.elements.filterCheckbox.forEach((checkbox) => {
+    checkbox.addEventListener('change', async () => {
+      updateUrlParams();
+      fetchData();
     });
   });
 
