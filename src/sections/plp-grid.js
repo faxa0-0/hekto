@@ -75,6 +75,7 @@ const sortFunction = async (e) => {
 };
 
 const addToCart = async (addToCartItem, dataId) => {
+  
   try {
     addToCartItem.classList.add('active');
 
@@ -105,29 +106,6 @@ const addToCart = async (addToCartItem, dataId) => {
     }, 2000);
     state.elements.cart.classList.add('c-cart-drawer--active');
   }
-};
-
-const filterFunction = () => {
-  state.elements.filterCheckbox.forEach(function (checkbox) {
-    checkbox.addEventListener('change', async function () {
-      if (this.checked) {
-        const name = this.getAttribute('name');
-        const value = this.getAttribute('value');
-
-        addToParam(name, value);
-
-        fetchData();
-      } else {
-        const name = this.getAttribute('name');
-        const value = this.getAttribute('value');
-
-        state.elements.url.searchParams.delete(name, value);
-        window.history.pushState({}, '', state.elements.url);
-
-        fetchData();
-      }
-    });
-  });
 };
 
 const loadMoreFunction = async () => {
@@ -161,12 +139,14 @@ const attachEventListeners = () => {
       addToCart(addToCartItem, dataId);
     });
   });
+
   state.elements.filterPrice.forEach((price) => {
     price.addEventListener('change', async () => {
       updateUrlParams();
       fetchData();
     });
   });
+
   state.elements.filterCheckbox.forEach((checkbox) => {
     checkbox.addEventListener('change', async () => {
       updateUrlParams();
@@ -179,8 +159,28 @@ const attachEventListeners = () => {
 
 const init = () => {
   cacheState();
-  filterFunction();
   attachEventListeners();
 };
 
 onDocumentReady(init);
+
+class AddToCart extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    onDocumentReady(() => {
+      this.addToCart = this.querySelector("[data-component='add-to-cart']");
+      this.init();
+    });
+  }
+
+  init() {
+    document.addEventListener('click', (e) => {
+      addToCart(e);
+    });
+  }
+}
+
+customElements.define('add-to-cart', AddToCart);

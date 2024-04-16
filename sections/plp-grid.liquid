@@ -45,7 +45,7 @@
           {% for product in collection.products %}
             {% render 'plp-grid-card', product: product %}
           {% endfor %}
-          {% if collection.products.size > 0 %}
+          {% if collection.products.size > 7 %}
             <button class='plp-grid--load-more'>Load more</button>
           {% endif %}
         </div>
