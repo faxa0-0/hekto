@@ -21,12 +21,10 @@ const cacheState = () => {
     ),
     loadMoreBtn: document.querySelector('.plp-grid--load-more'),
     defaultPage: 2,
-    maxPage: document.getElementById('plp-grid').getAttribute('data-max-page'),
   };
 };
 
 const resultData = (data) => {
-  console.log(data);
   const newInnerHtml = new DOMParser()
     .parseFromString(data, 'text/html')
     .getElementById('plp-grid-inner').innerHTML;
@@ -109,13 +107,6 @@ const addToCart = async (addToCartItem, dataId) => {
     state.elements.cart.classList.add('c-cart-drawer--active');
   }
 };
-const lastPageHideButton = () => {
-  console.log(state.elements.maxPage);
-  console.log(state.elements.defaultPage);
-  if (state.elements.maxPage <= state.elements.defaultPage) {
-    state.elements.collectionGridWrapper.setAttribute('data-last', true);
-  }
-};
 
 const loadMoreFunction = async () => {
   try {
@@ -129,6 +120,13 @@ const loadMoreFunction = async () => {
       'text/html',
     );
     const items = collectionsWrapper.querySelectorAll('.plp-item');
+    const nextPageState = collectionsWrapper
+      .getElementById('plp-grid')
+      .getAttribute('data-has-next-page');
+    state.elements.collectionGridWrapper.setAttribute(
+      'data-has-next-page',
+      nextPageState,
+    );
     state.elements.defaultPage += 1;
     items.forEach((item) => {
       state.elements.collectionGrid.insertAdjacentElement('beforeend', item);
@@ -136,7 +134,6 @@ const loadMoreFunction = async () => {
   } catch (error) {
     console.error('Error loading more:', error);
   }
-  lastPageHideButton();
 };
 
 const attachEventListeners = () => {

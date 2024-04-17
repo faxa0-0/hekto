@@ -41,7 +41,11 @@
         {% render 'plp-grid-filters', results: collection %}
       </div>
       {% paginate collection.products by section.settings.page_range %}
-        <div class='plp-grid' id='plp-grid' data-max-page='{{paginate.pages}}'>
+        <div
+          class='plp-grid'
+          id='plp-grid'
+          data-has-next-page='{%if paginate.next %}true{% else %}false{% endif %}'
+        >
           <div class='plp-grid-inner' id='plp-grid-inner'>
             {% for product in collection.products %}
               {% render 'plp-grid-card', product: product %}

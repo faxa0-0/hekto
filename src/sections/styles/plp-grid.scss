@@ -135,8 +135,8 @@
   &-grid {
     display: flex;
     flex-direction: column;
-    &[data-last='true'] {
-      button {
+    &[data-has-next-page='false'] {
+      .plp-grid--load-more {
         display: none;
       }
     }
