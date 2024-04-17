@@ -126,24 +126,33 @@
       box-shadow: none;
     }
   }
-  &-grid {
+  &-grid-inner {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     justify-items: center;
-    &--load-more {
-      padding: 14px 36px;
-      grid-column: span 4;
-      margin-top: 40px;
-      background-color: var(--color-primary-accent);
-      color: white;
-      font-weight: 900;
-      border: none;
-      cursor: pointer;
-      font-family: 'Lato', serif;
-      &:hover {
-        filter: brightness(90%);
+  }
+  &-grid {
+    display: flex;
+    flex-direction: column;
+    &[data-last='true'] {
+      button {
+        display: none;
       }
+    }
+  }
+  &-grid--load-more {
+    padding: 14px 36px;
+    margin: 0 auto;
+    margin-top: 40px;
+    background-color: var(--color-primary-accent);
+    color: white;
+    font-weight: 900;
+    border: none;
+    cursor: pointer;
+    font-family: 'Lato', serif;
+    &:hover {
+      filter: brightness(90%);
     }
   }
   &-sponsors-banner--wrapper {
@@ -311,8 +320,11 @@
     }
   }
   @media screen and (max-width: 1159.99px) {
-    &-grid {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    &-grid-inner {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    &-filters {
+      padding-block: 100px;
     }
     &-item {
       &--title {
@@ -324,24 +336,25 @@
     .plp-sponsors-banner {
       animation: sponsor 10s linear infinite alternate;
     }
-  }
-  @media screen and (max-width: 759.99px) {
-    &-grid {
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 40px;
+    &-grid--filters {
+      display: none;
     }
 
+    &-filters {
+      padding-block: 70px;
+    }
+  }
+  @media screen and (max-width: 759.99px) {
     .plp-sponsors-banner {
       animation: sponsor 10s linear infinite alternate;
     }
   }
-  @media screen and (max-width: 459.99px) {
-    &-grid {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-
-      column-gap: 10px;
-      row-gap: 20px;
+  @media screen and (max-width: 649.99px) {
+    &-grid-inner {
+      grid-template-columns: repeat(2, 1fr);
     }
+  }
+  @media screen and (max-width: 459.99px) {
     &-item {
       &__image-wrapper {
         height: 230px;
@@ -355,14 +368,13 @@
     }
   }
   @media screen and (max-width: 379.99px) {
-    &-grid {
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    }
-
     &-item {
       &--title {
         width: 15ch;
       }
+    }
+    &-grid {
+      column-gap: 10px;
     }
   }
 }

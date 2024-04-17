@@ -1,47 +1,49 @@
-<a href='{{ product.url }}' class='plp-item'>
-  <div class='plp-item__image-wrapper'>
-    <img
-      class='plp-item__image'
-      src='{{ product.featured_image |  image_url  }}'
-      alt='{{ product.title }}'
-    >
-    <div class='plp-item__actions'>
-      <span
-        class='action'
-        id='addToCart'
-        data-id='{{ product.first_available_variant.id }}'
+<div>
+  <a href='{{ product.url }}' class='plp-item'>
+    <div class='plp-item__image-wrapper'>
+      <img
+        class='plp-item__image'
+        src='{{ product.featured_image |  image_url  }}'
+        alt='{{ product.title }}'
       >
-        {%- render 'icon-set', icon: 'cart' -%}
-        <span class='loader'></span>
-      </span>
-      <span class='action'>{% render 'icon-set', icon: 'heart' %}</span>
-      <span class='action'>{% render 'icon-set', icon: 'search-plus' %}</span>
-    </div>
-  </div>
-  <div class='plp-item__info-wrapper'>
-    <h5 class='plp-item--title'>
-      {{ product.title }}
-    </h5>
-    {% if product.variants.size > 0 %}
-      <div class='plp-item--variants'>
-        {% for variant in product.variants %}
-          <span
-            class='plp-item--variant'
-            style='background-color: {{ variant.metafields.custom.color }}; color: {{ variant.metafields.custom.color }};'
-          ></span>
-        {% endfor %}
+      <div class='plp-item__actions'>
+        <span
+          class='action'
+          id='addToCart'
+          data-id='{{ product.first_available_variant.id }}'
+        >
+          {%- render 'icon-set', icon: 'cart' -%}
+          <span class='loader'></span>
+        </span>
+        <span class='action'>{% render 'icon-set', icon: 'heart' %}</span>
+        <span class='action'>{% render 'icon-set', icon: 'search-plus' %}</span>
       </div>
-    {% endif %}
-
-    <div class='plp-item--price primary-font-family'>
-      <p class='plp-item--price-discounted'>
-        {{ product.price | money }}
-      </p>
-      {% if product.compare_at_price > product.price %}
-        <p class='plp-item--price-actual'>
-          {{ product.compare_at_price | money }}
-        </p>
-      {% endif %}
     </div>
-  </div>
-</a>
+    <div class='plp-item__info-wrapper'>
+      <h5 class='plp-item--title'>
+        {{ product.title }}
+      </h5>
+      {% if product.variants.size > 0 %}
+        <div class='plp-item--variants'>
+          {% for variant in product.variants %}
+            <span
+              class='plp-item--variant'
+              style='background-color: {{ variant.metafields.custom.color }}; color: {{ variant.metafields.custom.color }};'
+            ></span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class='plp-item--price primary-font-family'>
+        <p class='plp-item--price-discounted'>
+          {{ product.price | money }}
+        </p>
+        {% if product.compare_at_price > product.price %}
+          <p class='plp-item--price-actual'>
+            {{ product.compare_at_price | money }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </a>
+</div>

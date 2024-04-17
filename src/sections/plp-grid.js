@@ -9,7 +9,8 @@ const cacheState = () => {
   state.elements = {
     sortBy: document.getElementById('sort'),
     url: new URL(window.location.href),
-    collectionGrid: document.getElementById('plp-grid'),
+    collectionGridWrapper: document.getElementById('plp-grid'),
+    collectionGrid: document.getElementById('plp-grid-inner'),
     addToCartItems: document.querySelectorAll('#addToCart'),
     cart: document.querySelector('.c-cart-drawer'),
     filterCheckbox: document.querySelectorAll(
@@ -20,13 +21,15 @@ const cacheState = () => {
     ),
     loadMoreBtn: document.querySelector('.plp-grid--load-more'),
     defaultPage: 2,
+    maxPage: document.getElementById('plp-grid').getAttribute('data-max-page'),
   };
 };
 
 const resultData = (data) => {
+  console.log(data);
   const newInnerHtml = new DOMParser()
     .parseFromString(data, 'text/html')
-    .getElementById('plp-grid').innerHTML;
+    .getElementById('plp-grid-inner').innerHTML;
 
   state.elements.collectionGrid.innerHTML = newInnerHtml;
 };
@@ -75,7 +78,6 @@ const sortFunction = async (e) => {
 };
 
 const addToCart = async (addToCartItem, dataId) => {
-  
   try {
     addToCartItem.classList.add('active');
 
@@ -107,6 +109,13 @@ const addToCart = async (addToCartItem, dataId) => {
     state.elements.cart.classList.add('c-cart-drawer--active');
   }
 };
+const lastPageHideButton = () => {
+  console.log(state.elements.maxPage);
+  console.log(state.elements.defaultPage);
+  if (state.elements.maxPage <= state.elements.defaultPage) {
+    state.elements.collectionGridWrapper.setAttribute('data-last', true);
+  }
+};
 
 const loadMoreFunction = async () => {
   try {
@@ -122,11 +131,12 @@ const loadMoreFunction = async () => {
     const items = collectionsWrapper.querySelectorAll('.plp-item');
     state.elements.defaultPage += 1;
     items.forEach((item) => {
-      state.elements.loadMoreBtn.insertAdjacentElement('beforebegin', item);
+      state.elements.collectionGrid.insertAdjacentElement('beforeend', item);
     });
   } catch (error) {
     console.error('Error loading more:', error);
   }
+  lastPageHideButton();
 };
 
 const attachEventListeners = () => {
