@@ -1,85 +1,3 @@
-<header class="head-bar page-width secondary-font-family">
-  <div data-overlay-control class="head-bar__overlay">
-    {% comment %} <span>BRUH</span> {% endcomment %}
-  </div>
-
-  <div class="head-bar__drawer">
-    <span data-drawer-control class="head-bar__drawer-action hamburger">
-      {% render 'icon-set', icon: 'hamburger' %}
-    </span>
-    <ul class="head-bar__drawer__links">
-      <span data-drawer-control class="head-bar__drawer-action close">
-        {% render 'icon-set', icon: 'close' %}
-      </span>
-
-      {% for link in section.settings.sidebar_menu.links %}
-        <li class="head-bar__drawer__link">
-          <a
-            class="head-bar__item--link {% if link.current %}active__link{% endif %}"
-            href="{{ link.url }}"
-          >
-            {{- link.title | escape -}}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <a href="/" class="head-bar__logo">
-    {% if section.settings.logo %}
-      <img class="head-bar__logo--image" src="{{ section.settings.logo}}">
-    {% elsif section.settings.logo_text %}
-      <span class="head-bar__logo--text primary-font-family">{{ section.settings.logo_text | capitalize }}</span>
-    {% endif %}
-  </a>
-
-  <ul class="head-bar__menu">
-    {% for link in section.settings.menu.links %}
-      <li class="head-bar__menu--item">
-        <a
-          class="head-bar__item--link {% if link.current %}active__link{% endif %}"
-          href="{{ link.url }}"
-        >
-          {{- link.title | escape -}}
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <div class="head-bar__actions">
-    <a href="{{ routes.account_url }}" class="head-bar__actions--account">
-      <span class="icon">{% render 'icon-set', icon: 'user' %}</span>
-    </a>
-    <a href="{{ routes.cart_url }}" class="head-bar__actions--cart">
-      <span class="icon">{% render 'icon-set', icon: 'cart' %}</span>
-    </a>
-    <form action="{{ routes.search_url }}" class="header__search--form">
-      <span data-search-control class="head-bar__search--icon" type="submit">
-        {% render 'icon-set', icon: 'search' %}
-      </span>
-      <!-- Search Box -->
-      <div class="head-bar__search--wrapper">
-        <div class="head-bar__search--mobile">
-          <input
-            type="search"
-            name="q"
-            placeholder="Search"
-            class="head-bar__search--mobile-input"
-          >
-          <button class="head-bar__search--mobile-btn">
-            {% render 'icon-set', icon: 'search' %}
-          </button>
-        </div>
-        <span
-          data-search-control
-          class="head-bar__search--mobile-btn close"
-        >
-          {% render 'icon-set', icon: 'close' %}
-        </span>
-      </div>
-    </form>
-  </div>
-</header>
 
 <style>
   .head-bar-section {
@@ -283,6 +201,91 @@
     }
   }
 </style>
+
+
+<header class="head-bar page-width secondary-font-family">
+  <div data-overlay-control class="head-bar__overlay">
+    {% comment %} <span>BRUH</span> {% endcomment %}
+  </div>
+
+  <div class="head-bar__drawer">
+    <span data-drawer-control class="head-bar__drawer-action hamburger">
+      {% render 'icon-set', icon: 'hamburger' %}
+    </span>
+    <ul class="head-bar__drawer__links">
+      <span data-drawer-control class="head-bar__drawer-action close">
+        {% render 'icon-set', icon: 'close' %}
+      </span>
+
+      {% for link in section.settings.sidebar_menu.links %}
+        <li class="head-bar__drawer__link">
+          <a
+            class="head-bar__item--link {% if link.current %}active__link{% endif %}"
+            href="{{ link.url }}"
+          >
+            {{- link.title | escape -}}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <a href="/" class="head-bar__logo">
+    {% if section.settings.logo %}
+      <img class="head-bar__logo--image" src="{{ section.settings.logo}}">
+    {% elsif section.settings.logo_text %}
+      <span class="head-bar__logo--text primary-font-family">{{ section.settings.logo_text | capitalize }}</span>
+    {% endif %}
+  </a>
+
+  <ul class="head-bar__menu">
+    {% for link in section.settings.menu.links %}
+      <li class="head-bar__menu--item">
+        <a
+          class="head-bar__item--link {% if link.current %}active__link{% endif %}"
+          href="{{ link.url }}"
+        >
+          {{- link.title | escape -}}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="head-bar__actions">
+    <a href="{{ routes.account_url }}" class="head-bar__actions--account">
+      <span class="icon">{% render 'icon-set', icon: 'user' %}</span>
+    </a>
+    <a href="{{ routes.cart_url }}" class="head-bar__actions--cart">
+      <span class="icon">{% render 'icon-set', icon: 'cart' %}</span>
+    </a>
+    <form action="{{ routes.search_url }}" class="header__search--form">
+      <span data-search-control class="head-bar__search--icon" type="submit">
+        {% render 'icon-set', icon: 'search' %}
+      </span>
+      <!-- Search Box -->
+      <div class="head-bar__search--wrapper">
+        <div class="head-bar__search--mobile">
+          <input
+            type="search"
+            name="q"
+            placeholder="Search"
+            class="head-bar__search--mobile-input"
+          >
+          <button class="head-bar__search--mobile-btn">
+            {% render 'icon-set', icon: 'search' %}
+          </button>
+        </div>
+        <span
+          data-search-control
+          class="head-bar__search--mobile-btn close"
+        >
+          {% render 'icon-set', icon: 'close' %}
+        </span>
+      </div>
+    </form>
+  </div>
+</header>
+
 <script>
   /*Sticky header*/
 
