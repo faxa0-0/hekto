@@ -18,12 +18,12 @@ const cacheState = () => {
 
 const initSwipers = () => {
   state.elements.sliders.forEach((slider) => {
-    const id = slider.id;
     const swiper = new Swiper(slider, {
       loop: true,
       modules: [Pagination],
       pagination: {
-        el: `.swiper-pagination--${id}`,
+        el: slider.querySelector('[data-component="hero-slider-pagination"]'),
+        clickable: true,
       },
     });
   });
@@ -31,6 +31,8 @@ const initSwipers = () => {
 
 const init = () => {
   cacheState();
+  if (window.loadedScripts["hero-slider"]) return;
+  window.loadedScripts["hero-slider"] = true;
   initSwipers();
 };
 
