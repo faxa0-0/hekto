@@ -33,6 +33,20 @@
   }
 }
 .plp {
+  &-overlay {
+    z-index: 4;
+    display: block;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    &.active {
+      visibility: visible;
+    }
+  }
   &-container * {
     margin: 0;
     padding: 0;
@@ -44,21 +58,14 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 40px;
-    .filters {
-      &__title {
-        font-size: 22px;
-        font-weight: bold;
-        color: var(--color-secondary-text);
-      }
-      &__stats {
-        color: var(--color-primary-subtext);
-        font-size: 12px;
-      }
-    }
+
     &--actions {
+      flex: 1;
       display: flex;
-      gap: 24px;
+      align-items: center;
+      justify-content: space-between;
       color: var(--color-secondary-subtext);
+
       &-sort {
         border-color: #e7e6ef;
         padding: 5px 11px;
@@ -79,6 +86,19 @@
         }
       }
     }
+    &--mobile-btn {
+      display: none;
+      background-color: var(--color-secondary-background);
+      color: #fff;
+      padding: 5px 40px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.25s;
+      &:hover {
+        background-color: #5f0ccb;
+      }
+    }
   }
   &-grid--container {
     display: flex;
@@ -86,6 +106,17 @@
   }
   &-grid--filters {
     width: 25%;
+    .icon-close {
+      display: none;
+      width: 20px;
+      height: 20px;
+      align-self: flex-end;
+      margin-bottom: 16px;
+      cursor: pointer;
+    }
+    &.open {
+      left: 0;
+    }
     .filters-form {
       display: flex;
       flex-direction: column;
@@ -338,6 +369,25 @@
     }
     &-grid--filters {
       display: none;
+      position: fixed;
+      margin: 0;
+      padding: 24px;
+      top: 0;
+      left: -100%;
+      width: 250px;
+      height: 100vh;
+      z-index: 4;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      transition: left 0.3s ease;
+      .icon-close {
+        display: block;
+      }
+    }
+    &-filters--mobile-btn {
+      display: block;
     }
 
     &-filters {
@@ -375,6 +425,10 @@
     }
     &-grid {
       column-gap: 10px;
+    }
+    &-filters--actions {
+      flex-wrap: wrap;
+      gap: 20px;
     }
   }
 }

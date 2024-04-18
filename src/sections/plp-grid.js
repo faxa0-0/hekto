@@ -7,6 +7,10 @@ const state = {
 
 const cacheState = () => {
   state.elements = {
+    plpOverlay: document.querySelector('.plp-overlay'),
+    mobileCloseBtn: document.querySelector('.plp-grid--filters .icon-close'),
+    mobileOpenBtn: document.querySelector('.plp-filters--mobile-btn'),
+    mobileFilters: document.querySelector('.plp-grid--filters'),
     sortBy: document.getElementById('sort'),
     url: new URL(window.location.href),
     collectionGridWrapper: document.getElementById('plp-grid'),
@@ -22,6 +26,11 @@ const cacheState = () => {
     loadMoreBtn: document.querySelector('.plp-grid--load-more'),
     defaultPage: 2,
   };
+};
+const toggleFilterSidebar = () => {
+  document.body.classList.toggle('overflow-hidden');
+  state.elements.plpOverlay.classList.toggle('active');
+  state.elements.mobileFilters.classList.toggle('open');
 };
 
 const resultData = (data) => {
@@ -160,6 +169,10 @@ const attachEventListeners = () => {
       fetchData();
     });
   });
+
+  state.elements.mobileCloseBtn.addEventListener('click', toggleFilterSidebar);
+  state.elements.mobileOpenBtn.addEventListener('click', toggleFilterSidebar);
+  state.elements.plpOverlay.addEventListener('click', toggleFilterSidebar);
 
   state.elements.loadMoreBtn.addEventListener('click', loadMoreFunction);
 };

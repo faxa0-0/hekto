@@ -2,12 +2,13 @@
 {{ 'plp-grid.min.js' | asset_url | script_tag }}
 
 <div class='plp'>
+  <div class='plp-overlay'>
+    {% comment %}
+      esthetic-ignore
+    {% endcomment %}
+  </div>
   <div class='plp-container page-width'>
     <div class='plp-filters'>
-      <div class='plp-filters--info'>
-        <h5 class='filters__title primary-font-family'>Ecommerce Accesories & Fashion item</h5>
-        <span class='filters__stats  secondary-font-family'>About 9,620 results (0.62 seconds)</span>
-      </div>
       <div class='plp-filters--actions'>
         <label for='sort'
           >Sort by:
@@ -25,19 +26,26 @@
             {% endfor %}
           </select>
         </label>
-        <div class='plp-filters--actions-view'>
-          <span>View: </span>
-          <span class='grid-view'>
-            {% render 'icon-set', icon: 'grid-view' %}
-          </span>
-          <span class='list-view'>
-            {% render 'icon-set', icon: 'list-view' %}
-          </span>
-        </div>
+
+        {% comment %}
+          TODO: grid-view to list-view
+          <div class='plp-filters--actions-view'>
+            <span>View: </span>
+            <span class='grid-view'>
+              {% render 'icon-set', icon: 'grid-view' %}
+            </span>
+            <span class='list-view'>
+              {% render 'icon-set', icon: 'list-view' %}
+            </span>
+          </div>
+        {% endcomment %}
+
+        <span class='plp-filters--mobile-btn'>Filters</span>
       </div>
     </div>
     <div class='plp-grid--container'>
       <div class='plp-grid--filters'>
+        {% render 'icon-set', icon: 'close' %}
         {% render 'plp-grid-filters', results: collection %}
       </div>
       {% paginate collection.products by section.settings.page_range %}
