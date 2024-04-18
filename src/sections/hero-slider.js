@@ -3,6 +3,7 @@ import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { loadedScripts } from '../utils/loadedScripts.js';
 
 const state = {
   elements: {},
@@ -30,9 +31,8 @@ const initSwipers = () => {
 };
 
 const init = () => {
+  if (loadedScripts()) return;
   cacheState();
-  if (window.loadedScripts["hero-slider"]) return;
-  window.loadedScripts["hero-slider"] = true;
   initSwipers();
 };
 
