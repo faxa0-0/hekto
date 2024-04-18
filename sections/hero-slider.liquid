@@ -15,12 +15,20 @@
         </div>
         <div class='slide-content__container'>
           <div class='slide-content'>
-            <p class='slide-content__subtitle secondary-font-family'>{{ block.settings.subtitle }}</p>
-            <h1 class='slide-content__title'>{{ block.settings.title }}</h1>
-            <p class='slide-content__description secondary-font-family'>{{ block.settings.description }}</p>
-            <a class='slide-content__btn primary-font-family' href='{{ block.settings.button_link }}'>
-              {{- block.settings.button_title -}}
-            </a>
+            {% if block.settings.subtitle != blank %}
+              <p class='slide-content__subtitle secondary-font-family'>{{ block.settings.subtitle }}</p>
+            {% endif %}
+            {% if block.settings.title != blank %}
+              <h1 class='slide-content__title'>{{ block.settings.title }}</h1>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <p class='slide-content__description secondary-font-family'>{{ block.settings.description }}</p>
+            {% endif %}
+            {% if block.settings.button_link != blank %}
+              <a class='slide-content__btn primary-font-family' href='{{ block.settings.button_link }}'>
+                {{- block.settings.button_title -}}
+              </a>
+            {% endif %}
           </div>
         </div>
       </div>
