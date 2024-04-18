@@ -10,17 +10,5 @@
     font-size: 36px;
     font-weight: 700;
     color: #101750;
-    margin-bottom: 10px;
-  }
-  &__breadcrumb {
-    &-item {
-      font-size: 16px;
-      font-weight: 500;
-      color: #000;
-      cursor: pointer;
-      &.current {
-        color: var(--color-primary-accent);
-      }
-    }
   }
 }
