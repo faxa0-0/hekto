@@ -63,9 +63,15 @@
   <div class='foot-bar__policy secondary-font-family'>
     <p class='foot-bar__policy__terms'>@LlamaLabs - All Rights Reserved</p>
     <div class='foot-bar__policy__socials'>
-      <a href='{{section.settings.facebook_link}}'>{% render 'icon-set', icon: 'facebook' %}</a>
-      <a href='{{section.settings.instagram_link}}'>{% render 'icon-set', icon: 'instagram' %}</a>
-      <a href='{{section.settings.twitter_link}}'>{% render 'icon-set', icon: 'twitter' %}</a>
+      {%- if settings.social_facebook_link != blank -%}
+        <a href='{{ settings.social_facebook_link }}'>{% render 'icon-set', icon: 'facebook' %}</a>
+      {% endif %}
+      {%- if settings.social_instagram_link != blank -%}
+        <a href='{{ settings.social_instagram_link }}'>{% render 'icon-set', icon: 'instagram' %}</a>
+      {% endif %}
+      {%- if settings.social_twitter_link != blank -%}
+        <a href='{{ settings.social_twitter_link }}'>{% render 'icon-set', icon: 'twitter' %}</a>
+      {% endif %}
     </div>
   </div>
 </footer>
