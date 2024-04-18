@@ -36,7 +36,9 @@
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-
+    <script>
+      window.loadedScripts = {};
+    </script>
     {{ content_for_header }}
 
     {%- liquid
