@@ -184,16 +184,7 @@ class AddToCart extends HTMLElement {
   }
 
   connectedCallback() {
-    onDocumentReady(() => {
-      this.addToCart = this.querySelector("[data-component='add-to-cart']");
-      this.init();
-    });
-  }
-
-  init() {
-    document.addEventListener('click', (e) => {
-      addToCart(e);
-    });
+    this.addEventListener('click', (e) => addToCart(e));
   }
 }
 
