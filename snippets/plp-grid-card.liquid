@@ -7,14 +7,15 @@
         alt='{{ product.title }}'
       >
       <div class='plp-item__actions'>
-        <span
+        <add-to-cart
+          data-component="add-to-cart"
           class='action'
           id='addToCart'
           data-id='{{ product.first_available_variant.id }}'
         >
           {%- render 'icon-set', icon: 'cart' -%}
           <span class='loader'></span>
-        </span>
+        </add-to-cart>
         <span class='action'>{% render 'icon-set', icon: 'heart' %}</span>
         <span class='action'>{% render 'icon-set', icon: 'search-plus' %}</span>
       </div>

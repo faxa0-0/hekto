@@ -2,6 +2,9 @@
 {{ 'plp-grid.min.js' | asset_url | script_tag }}
 
 <div class='plp'>
+  <script>
+    window.SectionID = '{{ section.id }}';
+  </script>
   <div class='plp-overlay'>
     {% comment %}
       esthetic-ignore
@@ -70,9 +73,6 @@
     </div>
   </div>
 </div>
-<script>
-  window.SectionID = { sectionID: '{{ section.id }}' };
-</script>
 
 {% schema %}
 {

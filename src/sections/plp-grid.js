@@ -15,7 +15,6 @@ const cacheState = () => {
     url: new URL(window.location.href),
     collectionGridWrapper: document.getElementById('plp-grid'),
     collectionGrid: document.getElementById('plp-grid-inner'),
-    addToCartItems: document.querySelectorAll('#addToCart'),
     cart: document.querySelector('.c-cart-drawer'),
     filterCheckbox: document.querySelectorAll(
       ".filter-container input[type='checkbox']",
@@ -27,6 +26,7 @@ const cacheState = () => {
     defaultPage: 2,
   };
 };
+
 const toggleFilterSidebar = () => {
   document.body.classList.toggle('overflow-hidden');
   state.elements.plpOverlay.classList.toggle('active');
@@ -84,14 +84,16 @@ const sortFunction = async (e) => {
   fetchData();
 };
 
-const addToCart = async (addToCartItem, dataId) => {
+const addToCart = async (event) => {
+  event.preventDefault();
+  const target = event.target.closest("[data-component='add-to-cart']");
   try {
-    addToCartItem.classList.add('active');
+    target.classList.add('active');
 
     let formData = {
       items: [
         {
-          id: dataId,
+          id: target.getAttribute('data-id'),
           quantity: 1,
         },
       ],
@@ -108,10 +110,10 @@ const addToCart = async (addToCartItem, dataId) => {
   } catch (error) {
     console.error('Error:', error);
   } finally {
-    addToCartItem.querySelector('.loader').classList.add('loaded');
+    target.querySelector('.loader').classList.add('loaded');
     setTimeout(() => {
-      addToCartItem.querySelector('.loader').classList.remove('loaded');
-      addToCartItem.classList.remove('active');
+      target.querySelector('.loader').classList.remove('loaded');
+      target.classList.remove('active');
     }, 2000);
     state.elements.cart.classList.add('c-cart-drawer--active');
   }
@@ -147,14 +149,6 @@ const loadMoreFunction = async () => {
 
 const attachEventListeners = () => {
   state.elements.sortBy.addEventListener('change', sortFunction);
-
-  state.elements.addToCartItems.forEach((addToCartItem) => {
-    addToCartItem.addEventListener('click', (e) => {
-      e.preventDefault();
-      const dataId = addToCartItem.getAttribute('data-id');
-      addToCart(addToCartItem, dataId);
-    });
-  });
 
   state.elements.filterPrice.forEach((price) => {
     price.addEventListener('change', async () => {
