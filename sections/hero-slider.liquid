@@ -1,0 +1,213 @@
+<script src='{{ 'hero-slider.min.js' | asset_url }}' defer></script>
+
+<div class='swiper' id='{{ section.id }}' data-component='hero-slider'>
+  <div class='swiper-wrapper'>
+    {% for block in section.blocks %}
+      <div class='swiper-slide'>
+        <div class='swiper-slide__image-container'>
+          <picture>
+            <source
+              srcset='{{ block.settings['mobile_image'] | image_url }}'
+              media='(max-width: 599.99px)'
+            >
+            <img class='swiper-slide__desktop-image' src='{{ block.settings.desktop_image |  image_url  }}' alt='Image'>
+          </picture>
+        </div>
+        <div class='slide-content__container'>
+          <div class='slide-content'>
+            {% if block.settings.subtitle != blank %}
+              <p class='slide-content__subtitle secondary-font-family'>{{ block.settings.subtitle }}</p>
+            {% endif %}
+            {% if block.settings.title != blank %}
+              <h1 class='slide-content__title'>{{ block.settings.title }}</h1>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <p class='slide-content__description secondary-font-family'>{{ block.settings.description }}</p>
+            {% endif %}
+            {% if block.settings.button_link != blank %}
+              <a class='slide-content__btn primary-font-family' href='{{ block.settings.button_link }}'>
+                {{- block.settings.button_title -}}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class='swiper-pagination' data-component='hero-slider-pagination'></div>
+</div>
+
+<style>
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--color-primary-accent);
+    border-radius: 0;
+    transform: rotate(45deg);
+    background-color: #fff;
+    transition: all 0.5s;
+  }
+  .swiper-pagination-bullet-active {
+    background-color: var(--color-primary-accent);
+  }
+  .swiper-slide {
+    position: relative;
+  }
+  .swiper-slide__image-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 40%;
+  }
+  .swiper-slide img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .swiper-slide__mobile-image {
+    display: none;
+  }
+  .slide-content__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .slide-content {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1vw + 0.5rem, 16px);
+    max-width: clamp(270px, 45%, 650px);
+    margin-right: 20%;
+  }
+  .slide-content__subtitle,
+  .slide-content__description {
+    margin: 0;
+    font-weight: 700;
+    color: var(--color-primary-accent);
+    font-size: clamp(12px, 1vw + 0.5rem, 16px);
+  }
+
+  .slide-content__title {
+    margin: 0;
+    font-size: clamp(32px, 3vw + 0.5rem, 53px);
+    font-weight: 700;
+  }
+  .slide-content__description {
+    color: var(--color-primary-subtext);
+    margin-bottom: 15px;
+  }
+  .slide-content__btn {
+    align-self: flex-start;
+    text-decoration: none;
+    background-color: var(--color-primary-accent);
+    color: #fff;
+    padding-inline: clamp(24px, 4vh, 40px);
+    padding-block: clamp(10px, 4vw, 16px);
+  }
+
+  @media screen and (max-width: 872.99px) {
+    .slide-content__title {
+      font-size: 24px;
+    }
+    .slide-content__subtitle,
+    .slide-content__description {
+      font-size: 12px;
+      margin-bottom: 0;
+    }
+    .slide-content__btn {
+      font-size: 14px;
+      padding: 12px 14px;
+    }
+  }
+  @media screen and (max-width: 599.99px) {
+    .slide-content {
+      text-align: center;
+      margin-right: 0;
+    }
+    .slide-content__title {
+      margin: 0;
+    }
+    .swiper-slide__image-container {
+      padding-bottom: 128%;
+    }
+    .slide-content__btn {
+      align-self: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "hero-slider",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "Slide_block",
+      "name": "Slide Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Best furniture for your castle"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "New Furniture Collection Trends in 2020"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo."
+        },
+        {
+          "type": "text",
+          "id": "button_title",
+          "label": "Button title",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link",
+          "default": "/"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider",
+      "blocks": [
+        {
+          "type": "Slide_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
