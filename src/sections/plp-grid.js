@@ -34,10 +34,17 @@ const toggleFilterSidebar = () => {
 };
 
 const resultData = (data) => {
+  const newNextPageState = new DOMParser()
+    .parseFromString(data, 'text/html')
+    .getElementById('plp-grid')
+    .getAttribute('data-has-next-page');
   const newInnerHtml = new DOMParser()
     .parseFromString(data, 'text/html')
     .getElementById('plp-grid-inner').innerHTML;
-
+  state.elements.collectionGridWrapper.setAttribute(
+    'data-has-next-page',
+    newNextPageState,
+  );
   state.elements.collectionGrid.innerHTML = newInnerHtml;
 };
 
@@ -46,7 +53,6 @@ function updateUrlParams() {
   const params = new URLSearchParams();
 
   if (sortBy.value) {
-    state.elements.defaultPage = 2;
     params.set(sortBy.name, sortBy.value);
   }
 
@@ -54,17 +60,16 @@ function updateUrlParams() {
     if (checkbox.checked) {
       const name = checkbox.getAttribute('name');
       const value = checkbox.getAttribute('value');
-      state.elements.defaultPage = 2;
       params.append(name, value);
     }
   });
 
   state.elements.filterPrice.forEach((price) => {
-    state.elements.defaultPage = 2;
     const name = price.getAttribute('name');
     params.set(name, price.value);
   });
 
+  state.elements.defaultPage = 2;
   state.elements.url.search = params.toString();
   window.history.pushState({}, '', state.elements.url);
 }
@@ -123,7 +128,7 @@ const loadMoreFunction = async () => {
   try {
     const response = await fetch(
       window.location.pathname +
-        `?section=${window.SectionID}&page=${state.elements.defaultPage}`,
+        `?section=${window.SectionID}&${window.location.search}&page=${state.elements.defaultPage}`,
     );
     const html = await response.text();
     const collectionsWrapper = new DOMParser().parseFromString(
