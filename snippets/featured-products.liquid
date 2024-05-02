@@ -29,7 +29,7 @@
       <div class='featured-products--variants'>
         {% for variant in product.variants %}
           <span
-            style='background-color: {{ variant.title | downcase }};'
+            style='background-color: {{ variant.metafields.custom.color }};'
             class='variant'
           ></span>
         {% endfor %}
