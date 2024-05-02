@@ -68,6 +68,24 @@ const initSwipers = () => {
     const swiper = new Swiper(slider, {
       slidesPerView: 4,
       spaceBetween: 29,
+      breakpoints: {
+        220: {
+          slidesPerView: 1,
+          spaceBetween: 10,
+        },
+        370: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
+        550: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+        1000: {
+          slidesPerView: 4,
+          spaceBetween: 30,
+        },
+      },
       modules: [Pagination],
       pagination: {
         el: slider.querySelector('.featured-products__slider--pagination'),
