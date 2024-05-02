@@ -1,0 +1,41 @@
+<div class='swiper-slide'>
+  <a href='{{ product.url }}' class='featured-products__block'>
+    <div class='featured-product__image--wrapper'>
+      <div class='featured-product__icons--wrapper'>
+        <span class='featured-product__icon'>
+          <span>
+            <add-to-cart
+              data-component='add-to-cart'
+              id='addToCart'
+              data-id='{{ product.first_available_variant.id }}'
+            >
+              {%- render 'icon-set', icon: 'cart' -%}
+              <span class='loader'></span>
+            </add-to-cart>
+          </span>
+          <span>{% render 'icon-set', icon: 'heart' %}</span>
+          <span>{% render 'icon-set', icon: 'search-plus' %}</span>
+        </span>
+      </div>
+      <span class='featured__span'>View Details</span>
+      <img
+        class='featured-product--image'
+        src='{{ product.featured_image |  image_url  }}'
+        alt='{{ product.title }}'
+      >
+    </div>
+    <div class='featured-products__content'>
+      <p class='featured-products--title'>{{ product.title }}</p>
+      <div class='featured-products--variants'>
+        {% for variant in product.variants %}
+          <span
+            style='background-color: {{ variant.title | downcase }};'
+            class='variant'
+          ></span>
+        {% endfor %}
+      </div>
+      <h5 class='featured-products--code primary-font-family'>Code - Y523201</h5>
+      <p class='featured-products--price primary-font-family'>{{ product.price | money }}</p>
+    </div>
+  </a>
+</div>
