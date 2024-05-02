@@ -11,9 +11,20 @@
         "start_working_hour": "9:00",
         "end_working_hour": "9:00"
       }
+    },
+    "head-bar": {
+      "type": "head-bar",
+      "settings": {
+        "color_scheme": "",
+        "menu": "main-menu",
+        "sidebar_menu": "sidebar-menu",
+        "logo_text": "hekto",
+        "show_search": true
+      }
     }
   },
   "order": [
-    "top-bar"
+    "top-bar",
+    "head-bar"
   ]
 }

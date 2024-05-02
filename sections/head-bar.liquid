@@ -1,0 +1,392 @@
+
+<style>
+  .head-bar-section {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    transition: top 0.15s ease-out;
+    padding-block: 19px;
+  }
+  .head-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .head-bar-section--hidden {
+    top: -100%;
+    // transform: translateY(-100%);
+  }
+  .head-bar a {
+    text-decoration: none;
+    color: var(--color-primary-text);
+  }
+  /* Drawer */
+  .head-bar__drawer {
+    display: none;
+  }
+  .head-bar__overlay {
+    display: block;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .head-bar__overlay.active {
+    visibility: visible;
+  }
+  .head-bar__drawer__links {
+    list-style-type: none;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    transition: left 0.3s ease;
+  }
+  .head-bar__drawer__links.open {
+    left: 0;
+  }
+  .head-bar__drawer__link {
+    padding-left: 20px;
+    font-size: 18px;
+    line-height: 40px;
+  }
+  .head-bar__drawer__link a {
+    text-decoration: none;
+    transition: all 0.25s;
+    color: var(--color-primary-text);
+  }
+  .head-bar__drawer__link:hover a {
+    color: var(--color-primary-accent);
+  }
+  .head-bar__drawer-action span {
+    width: 44px;
+    height: 44px;
+  }
+  .head-bar__drawer-action svg {
+    width: 18px;
+    cursor: pointer;
+    path {
+      fill: black;
+    }
+  }
+  .head-bar__drawer__links .close {
+    align-self: flex-end;
+    padding: 20px;
+  }
+
+  /* Logo */
+  .head-bar__logo {
+    font-size: 34px;
+    font-weight: 700;
+  }
+  /* Actions */
+  .head-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .head-bar__actions a .icon {
+    display: flex;
+    align-items: center;
+  }
+  .head-bar__actions svg {
+    height: 20px;
+    width: 20px;
+    path {
+      color: #242833;
+      fill: #242833;
+    }
+  }
+  .head-bar__search--icon {
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      align-self: start;
+    }
+  }
+  /* Mobile search */
+  .head-bar__search--wrapper {
+    position: fixed;
+    top: -100%;
+    left: 50%;
+    width: 100%;
+    height: 80px;
+    transform: translateX(-50%);
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    padding-block: 15px;
+    transition: all 0.5s;
+  }
+  .head-bar__search--wrapper.active {
+    top: 0;
+  }
+  .head-bar__search--mobile {
+    position: relative;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    border: 1px solid #1b1a1a;
+  }
+  .head-bar__search--mobile-input {
+    padding-inline: 18px;
+    height: 100%;
+    width: 100%;
+    appearance: none;
+    border: 0;
+  }
+  .head-bar__search--mobile-input:focus {
+    box-shadow: rgb(18, 18, 18) 0px 0px 0px 2px;
+    outline: none;
+  }
+  .head-bar__search--mobile-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 24px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+  .head-bar__search--mobile-btn.close {
+    right: 10%;
+  }
+
+  /* Menu */
+  .head-bar__menu {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    gap: 20px;
+  }
+  .head-bar__item--link {
+    font-size: 16px;
+    transition: all 0.5s;
+  }
+  .head-bar__item--link:hover {
+    color: var(--color-primary-accent);
+  }
+  .head-bar__item--link.active__link {
+    color: var(--color-primary-accent);
+  }
+
+  /* Media */
+  @media screen and (max-width: 767.99px) {
+    .head-bar__drawer {
+      display: block;
+    }
+    .head-bar__menu {
+      display: none;
+    }
+  }
+</style>
+
+
+<header class="head-bar page-width secondary-font-family">
+  <div data-overlay-control class="head-bar__overlay">
+    {% comment %} <span>BRUH</span> {% endcomment %}
+  </div>
+
+  <div class="head-bar__drawer">
+    <span data-drawer-control class="head-bar__drawer-action hamburger">
+      {% render 'icon-set', icon: 'hamburger' %}
+    </span>
+    <ul class="head-bar__drawer__links">
+      <span data-drawer-control class="head-bar__drawer-action close">
+        {% render 'icon-set', icon: 'close' %}
+      </span>
+
+      {% for link in section.settings.sidebar_menu.links %}
+        <li class="head-bar__drawer__link">
+          <a
+            class="head-bar__item--link {% if link.current %}active__link{% endif %}"
+            href="{{ link.url }}"
+          >
+            {{- link.title | escape -}}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <a href="/" class="head-bar__logo">
+    {% if section.settings.logo %}
+      <img class="head-bar__logo--image" src="{{ section.settings.logo}}">
+    {% elsif section.settings.logo_text %}
+      <span class="head-bar__logo--text primary-font-family">{{ section.settings.logo_text | capitalize }}</span>
+    {% endif %}
+  </a>
+
+  <ul class="head-bar__menu">
+    {% for link in section.settings.menu.links %}
+      <li class="head-bar__menu--item">
+        <a
+          class="head-bar__item--link {% if link.current %}active__link{% endif %}"
+          href="{{ link.url }}"
+        >
+          {{- link.title | escape -}}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="head-bar__actions">
+    <a href="{{ routes.account_url }}" class="head-bar__actions--account">
+      <span class="icon">{% render 'icon-set', icon: 'user' %}</span>
+    </a>
+    <a href="{{ routes.cart_url }}" class="head-bar__actions--cart">
+      <span class="icon">{% render 'icon-set', icon: 'cart' %}</span>
+    </a>
+    <form action="{{ routes.search_url }}" class="header__search--form">
+      <span data-search-control class="head-bar__search--icon" type="submit">
+        {% render 'icon-set', icon: 'search' %}
+      </span>
+      <!-- Search Box -->
+      <div class="head-bar__search--wrapper">
+        <div class="head-bar__search--mobile">
+          <input
+            type="search"
+            name="q"
+            placeholder="Search"
+            class="head-bar__search--mobile-input"
+          >
+          <button class="head-bar__search--mobile-btn">
+            {% render 'icon-set', icon: 'search' %}
+          </button>
+        </div>
+        <span
+          data-search-control
+          class="head-bar__search--mobile-btn close"
+        >
+          {% render 'icon-set', icon: 'close' %}
+        </span>
+      </div>
+    </form>
+  </div>
+</header>
+
+<script>
+  /*Sticky header*/
+
+  let lastScrollTop = 0;
+  const header = document.querySelector('.head-bar-section');
+
+  window.addEventListener('scroll', function () {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      header.classList.add('head-bar-section--hidden');
+    } else {
+      header.classList.remove('head-bar-section--hidden');
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  });
+
+  /*Drawer & Search + Overlay */
+
+  const drawerCloseAttr = '[data-drawer-control]';
+  const searchCloseAttr = '[data-search-control]';
+  const overlayCloseAttr = '[data-overlay-control]';
+  const headBarOverlay = document.querySelector('.head-bar__overlay');
+  const headBarDrawer = document.querySelector('.head-bar__drawer__links');
+  const mobileSearchBar = document.querySelector('.head-bar__search--wrapper');
+
+  const overlayControl = () => {
+    headBarOverlay.classList.toggle('active');
+    document.body.classList.toggle('overflow-hidden');
+  };
+
+  document.addEventListener('click', (e) => {
+    const headerEl = e.target.closest(drawerCloseAttr);
+    const searchEl = e.target.closest(searchCloseAttr);
+    const overlayEl = e.target.closest(overlayCloseAttr);
+
+    if (headerEl) {
+      headBarDrawer.classList.toggle('open');
+      overlayControl();
+      return;
+    }
+
+    if (searchEl) {
+      mobileSearchBar.classList.toggle('active');
+      overlayControl();
+      return;
+    }
+
+    if (overlayEl) {
+      if (headBarDrawer.classList.contains('open')) {
+        headBarDrawer.classList.remove('open');
+      } else if (mobileSearchBar.classList.contains('active')) {
+        mobileSearchBar.classList.remove('active');
+      }
+
+      overlayControl();
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Head bar",
+  "class": "head-bar-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-6"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Link lists"
+    },
+    {
+      "type": "link_list",
+      "id": "sidebar_menu",
+      "label": "Link lists",
+      "default": "main-menu"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "hekto"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search form?",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
