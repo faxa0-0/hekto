@@ -127,18 +127,17 @@ const loadMoreFunction = async () => {
 const addToCart = async (event) => {
   event.preventDefault();
   const target = event.target.closest("[data-component='add-to-cart']");
+
+  const formData = {
+    items: [
+      {
+        id: target.getAttribute('data-id'),
+        quantity: 1,
+      },
+    ],
+  };
   try {
     target.classList.add('active');
-
-    let formData = {
-      items: [
-        {
-          id: target.getAttribute('data-id'),
-          quantity: 1,
-        },
-      ],
-    };
-
     const res = await fetch(window.Shopify.routes.root + 'cart/add.js', {
       method: 'POST',
       headers: {
@@ -150,9 +149,9 @@ const addToCart = async (event) => {
   } catch (error) {
     console.error('Error:', error);
   } finally {
-    target.querySelector('.loader').classList.add('loaded');
+    target.classList.add('loaded');
     setTimeout(() => {
-      target.querySelector('.loader').classList.remove('loaded');
+      target.classList.remove('loaded');
       target.classList.remove('active');
     }, 2000);
   }

@@ -58,13 +58,18 @@
           data-has-next-page='{%if paginate.next %}true{% else %}false{% endif %}'
         >
           <div class='plp-grid-inner' id='plp-grid-inner'>
-            {% for product in collection.products %}
-              {% render 'plp-grid-card', product: product %}
-            {% endfor %}
+            {% if collection.products.size > 0 %}
+              {% for product in collection.products %}
+                {% render 'plp-grid-card', product: product %}
+              {% endfor %}
+            {% else %}
+              <div class='plp-grid--empty'>
+                <h5 class='primary-font-family'>No Items</h5>
+                <p class='secondary-font-family'>Try to remove some filters</p>
+              </div>
+            {% endif %}
           </div>
-          {% if collection.products.size > 7 %}
-            <button class='plp-grid--load-more'>Load more</button>
-          {% endif %}
+          <button class='plp-grid--load-more'>Load more</button>
         </div>
       {% endpaginate %}
     </div>

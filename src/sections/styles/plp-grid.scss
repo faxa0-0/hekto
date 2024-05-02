@@ -142,7 +142,6 @@
     }
     .filter-group-display__price-range {
       display: flex;
-      align-items: center;
       justify-content: center;
       flex-direction: column;
       gap: 20px;
@@ -166,9 +165,27 @@
   &-grid {
     display: flex;
     flex-direction: column;
+    position: relative;
+    width: 100%;
     &[data-has-next-page='false'] {
       .plp-grid--load-more {
         display: none;
+      }
+    }
+    &--empty {
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      h5 {
+        font-size: 40px;
+        font-weight: 600;
+        color: var(--color-primary-accent);
+      }
+      p {
+        font-weight: 500;
+        color: var(--color-secondary-subtext);
       }
     }
   }
@@ -285,16 +302,17 @@
             opacity: 0;
             transition: opacity 0.3s ease;
           }
-          .loader.loaded {
-            border: none;
+        }
 
-            &::before {
-              display: none;
-            }
+        &.loaded {
+          border: none;
 
-            &::after {
-              opacity: 1;
-            }
+          .loader::before {
+            display: none;
+          }
+
+          .loader::after {
+            opacity: 1;
           }
         }
       }
