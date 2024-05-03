@@ -16,12 +16,23 @@ const cacheState = () => {
     mobileFilters: document.querySelector('.plp-grid--filters'),
     collectionGridWrapper: document.getElementById('plp-grid'),
     collectionGrid: document.getElementById('plp-grid-inner'),
+    gridViewChangerContainer: document.querySelector(
+      '.plp-filters--actions-view',
+    ),
 
     sortBy: document.getElementById('sort'),
     filtersContainer: document.querySelector('.filters-form'),
     loadMoreBtn: document.querySelector('.plp-grid--load-more'),
   };
   state.queryParams.append('page', 1);
+};
+
+const changeGirdView = (event) => {
+  if (event.target.classList.contains('list-view')) {
+    state.elements.collectionGrid.classList.add('list');
+  } else {
+    state.elements.collectionGrid.classList.remove('list');
+  }
 };
 
 const toggleFilterSidebar = (force) => {
@@ -93,7 +104,6 @@ const onSortAndFilterChange = async (e) => {
   const data = await fetchData();
 
   renderData(data);
-
 };
 
 const loadMoreFunction = async () => {
@@ -174,6 +184,9 @@ const attachEventListeners = () => {
   state.elements.plpOverlay.addEventListener('click', () =>
     toggleFilterSidebar(false),
   );
+  state.elements.gridViewChangerContainer.addEventListener('click', (e) => {
+    changeGirdView(e);
+  });
 
   state.elements.loadMoreBtn.addEventListener('click', loadMoreFunction);
 };

@@ -83,6 +83,14 @@
         .grid-view,
         .list-view {
           cursor: pointer;
+          display: flex;
+          transition: all 0.5s;
+          &:hover {
+            transform: scale(1.25);
+          }
+          svg {
+            pointer-events: none;
+          }
         }
       }
     }
@@ -141,7 +149,7 @@
       list-style-type: none;
     }
     .filter-list-item:checked {
-      background: var(--color-secondary-background);
+      accent-color: #603eff;
     }
     .filter-group-display__price-range {
       display: flex;
@@ -164,6 +172,24 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     justify-items: center;
+    &.list {
+      display: flex;
+      flex-direction: column;
+      .plp-item {
+        justify-content: start;
+        flex-direction: row;
+        gap: 24px;
+        &__image-wrapper {
+          height: 200px;
+          width: 40%;
+          margin-bottom: 0;
+        }
+        &__actions {
+          bottom: auto;
+          gap: 8px;
+        }
+      }
+    }
   }
   &-grid {
     display: flex;
