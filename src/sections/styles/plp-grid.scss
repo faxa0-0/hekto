@@ -103,6 +103,9 @@
   &-grid--container {
     display: flex;
     gap: 30px;
+    &:has(.plp-grid--empty) {
+      padding-block: 50px;
+    }
   }
   &-grid--filters {
     width: 25%;
@@ -182,6 +185,7 @@
         font-size: 40px;
         font-weight: 600;
         color: var(--color-primary-accent);
+        text-wrap: nowrap;
       }
       p {
         font-weight: 500;

@@ -3,7 +3,6 @@ import { onDocumentReady } from '../utils/dom.js';
 
 const state = {
   elements: {},
-  defaultPage: 2,
   url: new URL(window.location.href),
   soloParams: ['sort_by', 'filter.v.price.gte', 'filter.v.price.lte', 'page'],
   queryParams: new URLSearchParams(window.location.search),
@@ -22,6 +21,7 @@ const cacheState = () => {
     filtersContainer: document.querySelector('.filters-form'),
     loadMoreBtn: document.querySelector('.plp-grid--load-more'),
   };
+  state.queryParams.append('page', 1);
 };
 
 const toggleFilterSidebar = (force) => {
@@ -84,6 +84,7 @@ function setUrlParams(name, value) {
 const onSortAndFilterChange = async (e) => {
   const name = e.target.attributes.name.value;
   const value = e.target.value;
+  state.queryParams.set('page', 1);
 
   setUrlParams(name, value);
 
@@ -93,14 +94,15 @@ const onSortAndFilterChange = async (e) => {
 
   renderData(data);
 
-  state.defaultPage = 2;
 };
 
 const loadMoreFunction = async () => {
+  state.queryParams.set('page', parseInt(state.queryParams.get('page')) + 1);
+
   try {
     const response = await fetch(
       window.location.pathname +
-        `?section=${window.SectionID}&${state.queryParams.toString()}&page=${state.defaultPage}`,
+        `?section=${window.SectionID}&${state.queryParams.toString()}`,
     );
     const html = await response.text();
     const collectionsWrapper = new DOMParser().parseFromString(
@@ -115,7 +117,6 @@ const loadMoreFunction = async () => {
       'data-has-next-page',
       nextPageState,
     );
-    state.defaultPage += 1;
     items.forEach((item) => {
       state.elements.collectionGrid.insertAdjacentElement('beforeend', item);
     });
@@ -166,7 +167,9 @@ const attachEventListeners = () => {
     onSortAndFilterChange(e);
   });
 
-  state.elements.mobileCloseBtn.addEventListener('click', toggleFilterSidebar);
+  state.elements.mobileCloseBtn.addEventListener('click', () =>
+    toggleFilterSidebar(false),
+  );
   state.elements.mobileOpenBtn.addEventListener('click', toggleFilterSidebar);
   state.elements.plpOverlay.addEventListener('click', () =>
     toggleFilterSidebar(false),
