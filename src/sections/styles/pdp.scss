@@ -1,0 +1,205 @@
+.pdp {
+  font-family: 'Galano Grotesque Alt', sans-serif;
+  //font-family: 'Galano Grotesque', sans-serif;
+  padding: 32px 40px;
+  &--container {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+
+    @media screen and (max-width: 1008.99px) {
+      & {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+  &-grid {
+    width: 58%;
+    min-width: 58%;
+    &--slider {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+
+      .slider-item {
+        margin: 0;
+        padding: 0;
+        width: 100% !important;
+        position: relative;
+        padding-bottom: 125%;
+        img,
+        video {
+          position: absolute;
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .slider-item:first-child {
+        grid-column: span 2;
+        order: -2;
+      }
+
+      .slider-item.item-video {
+        order: -1;
+      }
+    }
+    @media screen and (max-width: 1008.99px) {
+      & {
+        width: 100%;
+        min-width: 100%;
+      }
+      &--slider {
+        display: flex;
+        gap: 0;
+      }
+      .swiper-button-next::after,
+      .swiper-button-prev::after {
+        font-size: 2rem !important;
+        color: black;
+      }
+      .swiper-scrollbar {
+        background: white;
+      }
+      .swiper-horizontal > .swiper-scrollbar,
+      .swiper-scrollbar.swiper-scrollbar-horizontal {
+        position: absolute;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        left: 50%;
+        bottom: 1rem;
+        height: 2px;
+        z-index: 1;
+        width: 80%;
+      }
+      .swiper-scrollbar-drag {
+        display: block;
+        background: black;
+        border-radius: 0;
+      }
+    }
+  }
+  &-info {
+    max-width: 50rem;
+    padding: 1rem;
+    color: #000;
+    &--breadcrumbs {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+    &--title,
+    &--price {
+      font-size: clamp(14px, 2.5vw, 20px);
+      font-family: 'Galano Grotesque Alt', sans-serif;
+    }
+    &--color {
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    &--sizes {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      &-title {
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      &-head {
+        text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      &-actions {
+        display: flex;
+        gap: 20px;
+        font-size: 12px;
+        span {
+          cursor: pointer;
+        }
+      }
+      &-body {
+        display: flex;
+        gap: 40px;
+        .pdp-info--size {
+          &-label {
+            cursor: pointer;
+            &.sold-out {
+              text-decoration: line-through;
+              color: #b2b0b1;
+            }
+            &:not(.sold-out):hover {
+              font-weight: 500;
+            }
+          }
+
+          input {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1008.99px) {
+    & {
+      padding: 0;
+    }
+  }
+}
+@media screen and (min-width: 1008.99px) {
+  .swiper-horizontal {
+    touch-action: none;
+  }
+  .swiper {
+    margin-left: 0;
+    margin-right: 0;
+    position: static;
+    overflow: visible;
+    list-style: none;
+    padding: 0;
+    z-index: 0;
+    display: block;
+  }
+  .swiper-wrapper {
+    position: initial;
+    height: initial;
+    z-index: initial;
+    transition: none;
+    box-sizing: initial;
+  }
+  .swiper-slide {
+    flex-shrink: 0;
+    height: initial;
+    transition: none;
+    display: initial;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
+
+  [data-sticky-element] {
+    position: relative;
+    z-index: 1000;
+  }
+  .is-sticky {
+    position: fixed;
+    width: 42%;
+    min-width: 42%;
+    top: 0;
+    right: 0;
+  }
+}
+.divider {
+  margin-bottom: 26px;
+  padding-bottom: 26px;
+  border-bottom: solid 0.5px #000;
+}

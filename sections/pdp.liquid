@@ -1,0 +1,89 @@
+<link href='https://fonts.cdnfonts.com/css/galano-grotesque-alt' rel='stylesheet'>
+{{ 'pdp.min.css' | asset_url | stylesheet_tag }}
+{{ 'pdp.min.js' | asset_url | script_tag }}
+
+<section class='pdp'>
+  <div class='pdp--container'>
+    <div class='pdp-grid'>
+      <div class='pdp-grid--container swiper'>
+        <div class='pdp-grid--slider swiper-wrapper'>
+          {% for imageItem in product.images %}
+            {% assign aspect_ratio = variant.featured_media.preview_image.aspect_ratio %}
+            {% assign alt = variant.featured_media.alt | default: variant.title | escape %}
+            <figure class='slider-item swiper-slide'>
+              <img
+                src='{{ imageItem.src | image_url: width: 1100 }}'
+                alt='{{ alt }}'
+              >
+            </figure>
+          {% endfor %}
+          <figure class='slider-item swiper-slide item-video'>
+            <video
+              autoplay=''
+              muted=''
+              loop=''
+              playsinline=''
+              type='video/mp4'
+              src='{{ product.metafields.product.video.value }}'
+            ></video>
+          </figure>
+        </div>
+        <div class='swiper-button-next'>
+          {% comment %}
+            esthetic-ignore
+          {% endcomment %}
+        </div>
+        <div class='swiper-button-prev'>
+          {% comment %}
+            esthetic-ignore
+          {% endcomment %}
+        </div>
+
+        <div class='swiper-scrollbar'></div>
+      </div>
+    </div>
+    <div class='pdp-info' data-sticky-element>
+      <div class='pdp-info--container'>
+        <div class='pdp-info--breadcrumbs'><span>Ready-To-Wear</span> / <span>Tops</span> / <span> Sweaters</span></div>
+        <h1 class='pdp-info--title'>{{ product.title }}</h1>
+        <p class='pdp-info--price divider'>{{ product.price | money_with_currency }}</p>
+        <p class='pdp-info--color'>
+          Color: <span class='pdp-info--color-name'>{{ product.options_by_name.Color.values[0] }}</span>
+        </p>
+        <div class='pdp-info--variants-list divider'>Variants container</div>
+        {% if product.variants.size >= 1 %}
+          <div class='pdp-info--sizes divider'>
+            <div class='pdp-info--sizes-head'>
+              <p class='pdp-info--sizes-title'>Size: X</p>
+              <div class='pdp-info--sizes-actions'>
+                <span class='pdp-info--sizes-acctions-sg'>Size Guide</span>
+                <span class='pdp-info--sizes-acctions-fg'>Fit Guide</span>
+              </div>
+            </div>
+            <div class='pdp-info--sizes-body'>
+              {% for value in product.options_by_name.size.values %}
+                <div class='pdp-info--size'>
+                  <input
+                    type='radio'
+                    name='{{ option.name }}'
+                    {% if option.selected_value == value %}
+                      checked
+                    {% endif %}
+                    value='{{ value }}'
+                    id='{{ option.name | handleize }}-{{ value | handleize }}'
+                  >
+                  <label
+                    class='pdp-info--size-label'
+                    for='{{ option.name | handleize }}-{{ value | handleize }}'
+                  >
+                    {{- value -}}
+                  </label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
