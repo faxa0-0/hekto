@@ -7,22 +7,26 @@ import { loadedScripts } from '../utils/loadedScripts.js';
 
 const state = {
   elements: {},
+  lastScrollTop: 0,
 };
 
 const cacheState = () => {
   state.elements = {
     sliders: document.querySelectorAll('.pdp-grid--container'),
     stickyElement: document.querySelector('[data-sticky-element]'),
-    stickyAnchor: document.querySelector('[data-sticky-element]').parentNode,
   };
 };
-const getAnchorOffset = () =>
-  state.elements.stickyAnchor.getBoundingClientRect().top;
+function updateStickyPosition() {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-const updateSticky = () => {
-  const isSticky = getAnchorOffset() < 0;
-  state.elements.stickyElement.classList.toggle('is-sticky', isSticky);
-};
+  if (scrollTop > state.lastScrollTop) {
+    state.elements.stickyElement.style.top = '0';
+  } else {
+    state.elements.stickyElement.style.top = '90px';
+  }
+
+  state.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+}
 
 const initSwipers = () => {
   state.elements.sliders.forEach((slider) => {
@@ -60,14 +64,13 @@ const initSwipers = () => {
 };
 const attachEventListeners = () => {
   initSwipers();
-  window.addEventListener('scroll', updateSticky);
-  window.addEventListener('resize', updateSticky);
+
+  window.addEventListener('scroll', updateStickyPosition);
 };
 
 const init = () => {
   if (loadedScripts('pdp')) return;
   cacheState();
-  updateSticky();
   attachEventListeners();
 };
 
