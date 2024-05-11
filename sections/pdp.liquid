@@ -8,7 +8,6 @@
       <div class='pdp-grid--container swiper'>
         <div class='pdp-grid--slider swiper-wrapper'>
           {% for imageItem in product.images %}
-            {% assign aspect_ratio = variant.featured_media.preview_image.aspect_ratio %}
             {% assign alt = variant.featured_media.alt | default: variant.title | escape %}
             <figure class='slider-item swiper-slide'>
               <img
@@ -43,14 +42,40 @@
       </div>
     </div>
     <div class='pdp-info'>
-      <div class='pdp-info--container'  data-sticky-element>
+      <div class='pdp-info--container' data-sticky-element>
         <div class='pdp-info--breadcrumbs'><span>Ready-To-Wear</span> / <span>Tops</span> / <span> Sweaters</span></div>
         <h1 class='pdp-info--title'>{{ product.title }}</h1>
         <p class='pdp-info--price divider'>{{ product.price | money_with_currency }}</p>
         <p class='pdp-info--color'>
           Color: <span class='pdp-info--color-name'>{{ product.options_by_name.Color.values[0] }}</span>
         </p>
-        <div class='pdp-info--variants-list divider'>Variants container</div>
+        <div class='pdp-info--variants divider'>
+          {% assign productHandles = product.metafields.product.handles | split: ', ' %}
+          <ul class='pdp-info--variants-list'>
+            <li
+              class='pdp-info--variants-item selected'
+              data-value='{{ product.handle }}'
+            >
+              <img
+                class='pdp-info--variants-item-image'
+                src='{{ product.featured_media | image_url: width: 250 }}'
+                alt='{{ product.title }}'
+              >
+            </li>
+            {% for productHandle in productHandles %}
+              <li
+                class='pdp-info--variants-item'
+                data-value='{{ productHandle }}'
+              >
+                <img
+                  class='pdp-info--variants-item-image'
+                  src='{{ all_products[productHandle].featured_media | image_url: width: 250 }}'
+                  alt='{{ all_products[productHandle].title }}'
+                >
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
         {% if product.variants.size >= 1 %}
           <div class='pdp-info--sizes divider'>
             <div class='pdp-info--sizes-head'>
