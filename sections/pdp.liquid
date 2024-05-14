@@ -1,5 +1,10 @@
 <link href='https://fonts.cdnfonts.com/css/galano-grotesque-alt' rel='stylesheet'>
 {{ 'pdp.min.css' | asset_url | stylesheet_tag }}
+
+<script>
+  window.pdpCurrentProduct = {{product |  json}}
+</script>
+
 {{ 'pdp.min.js' | asset_url | script_tag }}
 
 <section class='pdp'>
@@ -76,38 +81,60 @@
             {% endfor %}
           </ul>
         </div>
-        {% if product.variants.size >= 1 %}
-          <div class='pdp-info--sizes divider'>
-            <div class='pdp-info--sizes-head'>
-              <p class='pdp-info--sizes-title'>Size: X</p>
-              <div class='pdp-info--sizes-actions'>
-                <span class='pdp-info--sizes-acctions-sg'>Size Guide</span>
-                <span class='pdp-info--sizes-acctions-fg'>Fit Guide</span>
-              </div>
-            </div>
-            <div class='pdp-info--sizes-body'>
-              {% for value in product.options_by_name.size.values %}
-                <div class='pdp-info--size'>
-                  <input
-                    type='radio'
-                    name='{{ option.name }}'
-                    {% if option.selected_value == value %}
-                      checked
-                    {% endif %}
-                    value='{{ value }}'
-                    id='{{ option.name | handleize }}-{{ value | handleize }}'
-                  >
-                  <label
-                    class='pdp-info--size-label'
-                    for='{{ option.name | handleize }}-{{ value | handleize }}'
-                  >
-                    {{- value -}}
-                  </label>
+        {% if product.options.size >= 1 %}
+          <div class='pdp-info--variant-option--container'>
+            {% for option in product.options -%}
+              <div class='pdp-info--variant-option divider'>
+                <div class='pdp-info--variant-option-head'>
+                  <p class='pdp-info--variant-option-title' id='pdp-info--variant-{{ option }}-option-title'>
+                    {{ option }}
+                  </p>
+                  {% if option == 'Size' %}
+                    <div class='pdp-info--variant-option-actions'>
+                      <span class='pdp-info--variant-option-acctions-sg'>Size Guide</span>
+                      <span class='pdp-info--variant-option-acctions-fg'>Fit Guide</span>
+                    </div>
+                  {% endif %}
                 </div>
-              {% endfor %}
-            </div>
+                <div class='pdp-info--variant-option-body'>
+                  {% for value in product.options_by_name[option].values %}
+                    <div class='pdp-info--option'>
+                      <input
+                        type='radio'
+                        name='{{option}}'
+                        {% if option.selected_value == value %}
+                          checked
+                        {% endif %}
+                        value='{{ value }}'
+                        id='{{ option | handleize }}-{{ value | handleize }}'
+                      >
+                      <label
+                        class='pdp-info--option-label'
+                        for='{{ option | handleize }}-{{ value | handleize }}'
+                      >
+                        {{- value -}}
+                      </label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
           </div>
         {% endif %}
+        <div class='pdp-info--addToCart'>
+          <div class='quantity-selector'>
+            <button class='quantity-selector--decrease'>-</button>
+            <input
+              class='quantity-selector--value'
+              type='number'
+              name='quantity-selector--value'
+              value='1'
+              id='quantity-selector--value'
+            >
+            <button class='quantity-selector--increase'>+</button>
+          </div>
+          <button class='addToCart-btn' id='addToCart-btn'>Add To cart</button>
+        </div>
       </div>
     </div>
   </div>
